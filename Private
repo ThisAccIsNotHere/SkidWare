@@ -10734,6 +10734,86 @@ runFunction(function()
 	})
 end)
 
+runFunction(function()
+	local AnimationPlayer = {Enabled = false}
+	local AnimationPlayerBox = {Value = "10725339583"}
+	local AnimationPlayerSpeed = {Speed = 0}
+	AnimationPlayer.Connections = {}
+	local playedanim
+	InvisExploit = GuiLibrary.ObjectsThatCanBeSaved.BlatantWindow.Api.CreateOptionsButton({
+		Name = "InvisExploit",
+		Function = function(callback)
+			if callback then 
+				if entityLibrary.isAlive then 
+					if playedanim then 
+						playedanim:Stop() 
+						playedanim.Animation:Destroy()
+						playedanim = nil 
+					end
+					local anim = Instance.new("Animation")
+					local suc, id = pcall(function() return string.match(game:GetObjects("rbxassetid://"..AnimationPlayerBox.Value)[1].AnimationId, "%?id=(%d+)") end)
+					if not suc then
+						id = AnimationPlayerBox.Value
+					end
+					anim.AnimationId = "rbxassetid://"..id
+					local suc, res = pcall(function() playedanim = entityLibrary.character.Humanoid.Animator:LoadAnimation(anim) end)
+					if suc then
+						playedanim.Priority = Enum.AnimationPriority.Action4
+						playedanim.Looped = true
+						playedanim:Play()
+						playedanim:AdjustSpeed(AnimationPlayerSpeed.Speed / 10)
+						table.insert(AnimationPlayer.Connections, playedanim.Stopped:Connect(function()
+							pcall(function()
+								if AnimationPlayer.Enabled then
+									AnimationPlayer.ToggleButton(false)
+									AnimationPlayer.ToggleButton(false)
+								end
+							end)
+						end))
+					else
+						warningNotification("AnimationPlayer", "failed to load anim : "..(res or "invalid animation id"), 5)
+					end
+				end
+				table.insert(AnimationPlayer.Connections, lplr.CharacterAdded:Connect(function()
+					repeat task.wait() until entityLibrary.isAlive or not AnimationPlayer.Enabled
+					task.wait(0.5)
+					if not AnimationPlayer.Enabled then return end
+					if playedanim then 
+						playedanim:Stop() 
+						playedanim.Animation:Destroy()
+						playedanim = nil 
+					end
+					local anim = Instance.new("Animation")
+					local suc, id = pcall(function() return string.match(game:GetObjects("rbxassetid://"..AnimationPlayerBox.Value)[1].AnimationId, "%?id=(%d+)") end)
+					if not suc then
+						id = AnimationPlayerBox.Value
+					end
+					anim.AnimationId = "rbxassetid://"..id
+					local suc, res = pcall(function() playedanim = entityLibrary.character.Humanoid.Animator:LoadAnimation(anim) end)
+					if suc then
+						playedanim.Priority = Enum.AnimationPriority.Action4
+						playedanim.Looped = true
+						playedanim:Play()
+						playedanim:AdjustSpeed(AnimationPlayerSpeed.Value / 10)
+						playedanim.Stopped:Connect(function()
+							if AnimationPlayer.Enabled then
+								AnimationPlayer.ToggleButton(false)
+								AnimationPlayer.ToggleButton(false)
+							end
+						end)
+					else
+						warningNotification("AnimationPlayer", "failed to load anim : "..(res or "invalid animation id"), 5)
+					end
+				end))
+			else
+				if playedanim then playedanim:Stop() playedanim = nil end
+			end
+		end
+	})
+end)
+
+
+
 local Corner = Instance.new("UICorner")
 local Title1 = Instance.new("TextLabel")
 local Title2 = Instance.new("TextLabel")
