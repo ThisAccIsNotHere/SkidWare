@@ -10813,163 +10813,22 @@ STPD = SkyTP.CreateSlider({
 })
 
 runFunction(function()
-	local transformed = false
-	local TexturePacks = {["Enabled"] = false}
-	local packselected = {["Value"] = "OldBedwars"}
-
-	local packfunctions = {
-		SeventhPack = function() 
-			task.spawn(function()
-				loadstring(game:HttpGet("https://raw.githubusercontent.com/SnoopyOwner/TexturePacks/main/Pack%237"))()  
-			end)
-		end,
-		EighthPack = function() 
-			task.spawn(function()
-				loadstring(game:HttpGet("https://raw.githubusercontent.com/SnoopyOwner/TexturePacks/main/1024xPack"))()  
-			end)
-		end,
-		SixthPack = function() 
-			task.spawn(function()
-				loadstring(game:HttpGet("https://raw.githubusercontent.com/SnoopyOwner/TexturePacks/main/Pack%236"))()  
-			end)
-		end,
-		FifthPack = function() 
-			task.spawn(function()
-				loadstring(game:HttpGet("https://raw.githubusercontent.com/SnoopyOwner/TexturePacks/main/Pack%235"))()  
-			end)
-		end,
-		FourthPack = function() 
-			task.spawn(function()
-				loadstring(game:HttpGet("https://raw.githubusercontent.com/SnoopyOwner/TexturePacks/main/Pack%234"))()  
-			end)
-		end,
-		ThirdPack = function() 
-			task.spawn(function()
-				loadstring(game:HttpGet("https://raw.githubusercontent.com/SnoopyOwner/Modules/main/TexturePack"))()  
-			end)
-		end,
-		SecondPack = function() 
-			task.spawn(function()
-				loadstring(game:HttpGet("https://raw.githubusercontent.com/SnoopyOwner/TexturePacks/main/Pack%232"))()  
-			end)
-		end,
-		FirstPack = function() 
-			task.spawn(function()
-				loadstring(game:HttpGet("https://raw.githubusercontent.com/SnoopyOwner/TexturePacks/main/Pack%231"))()  
-			end)
-		end,
-		EgirlPack = function() 
-			task.spawn(function() 
-				local Players = game:GetService("Players")
-				local ReplicatedStorage = game:GetService("ReplicatedStorage")
-				local Workspace = game:GetService("Workspace")
-				local objs = game:GetObjects("rbxassetid://14126814481")
-				local import = objs[1]
-				import.Parent = game:GetService("ReplicatedStorage")
-				index = {
-					{
-						name = "wood_sword",
-						offset = CFrame.Angles(math.rad(0),math.rad(-100),math.rad(-90)),
-						model = import:WaitForChild("Wood_Sword"),
-					},
-					{
-						name = "stone_sword",
-						offset = CFrame.Angles(math.rad(0),math.rad(-100),math.rad(-90)),
-						model = import:WaitForChild("Stone_Sword"),
-					},
-					{
-						name = "iron_sword",
-						offset = CFrame.Angles(math.rad(0),math.rad(-100),math.rad(-90)),
-						model = import:WaitForChild("Iron_Sword"),
-					},
-					{
-						name = "diamond_sword",
-						offset = CFrame.Angles(math.rad(0),math.rad(-100),math.rad(-90)),
-						model = import:WaitForChild("Diamond_Sword"),
-					},
-					{
-						name = "emerald_sword",
-						offset = CFrame.Angles(math.rad(0),math.rad(-100),math.rad(-90)),
-						model = import:WaitForChild("Emerald_Sword"),
-					},
-					{
-						name = "rageblade",
-						offset = CFrame.Angles(math.rad(0),math.rad(-90),math.rad(90)),
-						model = import:WaitForChild("Rageblade"),
-					}, 
-				}
-				local func = Workspace:WaitForChild("Camera").Viewmodel.ChildAdded:Connect(function(tool)
-					if(not tool:IsA("Accessory")) then return end
-					for i,v in pairs(index) do
-						if(v.name == tool.Name) then
-							for i,v in pairs(tool:GetDescendants()) do
-								if(v:IsA("Part") or v:IsA("MeshPart") or v:IsA("UnionOperation")) then
-									v.Transparency = 1
-								end
-							end
-							local model = v.model:Clone()
-							model.CFrame = tool:WaitForChild("Handle").CFrame * v.offset
-							model.CFrame *= CFrame.Angles(math.rad(0),math.rad(-50),math.rad(0))
-							model.Parent = tool
-							local weld = Instance.new("WeldConstraint",model)
-							weld.Part0 = model
-							weld.Part1 = tool:WaitForChild("Handle")
-							local tool2 = Players.LocalPlayer.Character:WaitForChild(tool.Name)
-							for i,v in pairs(tool2:GetDescendants()) do
-								if(v:IsA("Part") or v:IsA("MeshPart") or v:IsA("UnionOperation")) then
-									v.Transparency = 1
-								end
-							end
-							local model2 = v.model:Clone()
-							model2.Anchored = false
-							model2.CFrame = tool2:WaitForChild("Handle").CFrame * v.offset
-							model2.CFrame *= CFrame.Angles(math.rad(0),math.rad(-50),math.rad(0))
-							model2.CFrame *= CFrame.new(.6,0,-1)
-							model2.Parent = tool2
-							local weld2 = Instance.new("WeldConstraint",model)
-							weld2.Part0 = model2
-							weld2.Part1 = tool2:WaitForChild("Handle")
-						end
-					end
-				end)			             
-			end)
-		end,
-		GlizzyPack = function() 
-			task.spawn(function()
-				loadstring(game:HttpGet("https://github.com/SnoopyOwner/TexturePacks/blob/main/Glizzy"))()   
-			end)
-		end
-	}
-
-	TexturePacks = GuiLibrary.ObjectsThatCanBeSaved.RenderWindow.Api.CreateOptionsButton({
-		["Name"] = "TexturePacks",
-		["Function"] = function(callback) 
-			if callback then 
-				if not transformed then
-					transformed = true
-					packfunctions[packselected["Value"]]()
-				end
-			else
-				CreateNotification("TexturePacks", "Disabled Next Game", 10)
-			end
-		end,
-		["ExtraText"] = function()
-			return packselected["Value"]
-		end
-	})
-	packselected = TexturePacks.CreateDropdown({
-		["Name"] = "Pack",
-		["Function"] = function() end,
-		["List"] = {"GlizzyPack", "FirstPack", "SecondPack", "ThirdPack", "FourthPack", "FifthPack", "SixthPack", "SeventhPack","EighthPack", "EgirlPack"}
-	})
-end)
-
-runFunction(function()
 	CustomKeystokes = GuiLibrary.ObjectsThatCanBeSaved.RenderWindow.Api.CreateOptionsButton({
 		Name = "Keystokes",
 		Function = function(callback)
 			if callback then 
 				loadstring(game:HttpGet("https://raw.githubusercontent.com/ThisAccIsNotHere/SkidWare/main/Keystroke"))()
+			end
+		end
+	})
+end)
+
+runFunction(function()
+	CustomKeystokes = GuiLibrary.ObjectsThatCanBeSaved.RenderWindow.Api.CreateOptionsButton({
+		Name = "#1",
+		Function = function(callback)
+			if callback then 
+				loadstring(game:HttpGet("https://raw.githubusercontent.com/SnoopyOwner/TexturePacks/main/Pack%231"))()  
 			end
 		end
 	})
