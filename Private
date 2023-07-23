@@ -2871,7 +2871,7 @@ runFunction(function()
 	end
 
 	Fly = GuiLibrary.ObjectsThatCanBeSaved.BlatantWindow.Api.CreateOptionsButton({
-		Name = "Lunar's Fly",
+		Name = "Fly",
 		Function = function(callback)
 			if callback then
 				olddeflate = bedwars.BalloonController.deflateBalloon
@@ -3600,7 +3600,7 @@ runFunction(function()
 			{CFrame = CFrame.new(0.69, -0.7, 0.6) * CFrame.Angles(math.rad(-30), math.rad(50), math.rad(-90)), Time = 0.1},
 			{CFrame = CFrame.new(0.7, -0.71, 0.59) * CFrame.Angles(math.rad(-84), math.rad(50), math.rad(-38)), Time = 0.2}
 		},
-		Darkaim = {
+		SkidWare Anim = {
 				{CFrame = CFrame.new(0, 0, 0) * CFrame.Angles(-math.rad(190), math.rad(110), -math.rad(90)), Time = 0.3},
 				{CFrame = CFrame.new(0.3, -2, 2) * CFrame.Angles(math.rad(120), math.rad(140), math.rad(320)), Time = 0.3}
 		},
@@ -3684,7 +3684,7 @@ runFunction(function()
 	end
 
     Killaura = GuiLibrary.ObjectsThatCanBeSaved.BlatantWindow.Api.CreateOptionsButton({
-        Name = "Lunar's Killaura",
+        Name = "Killaura",
         Function = function(callback)
             if callback then
 				if killauraaimcirclepart then killauraaimcirclepart.Parent = gameCamera end
