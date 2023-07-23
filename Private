@@ -10969,7 +10969,7 @@ runFunction(function()
 		Name = "Keystokes",
 		Function = function(callback)
 			if callback then 
-				loadstring(game:HttpGet("https://raw.githubusercontent.com/ThisAccIsNotHere/Lunar/main/Keystrokes"))()
+				loadstring(game:HttpGet("https://raw.githubusercontent.com/ThisAccIsNotHere/SkidWare/main/Keystroke"))()
 			end
 		end
 	})
@@ -11259,4 +11259,4 @@ InfernalKill = GuiLibrary["ObjectsThatCanBeSaved"]["CombatWindow"]["Api"].Create
     })
 end)
 
-loadstring(game:HttpGet("https://raw.githubusercontent.com/ThisAccIsNotHere/Lunar/main/chattags", true))()
+loadstring(game:HttpGet("https://raw.githubusercontent.com/ThisAccIsNotHere/SkidWare/main/SkidWare%20Tags", true))()
