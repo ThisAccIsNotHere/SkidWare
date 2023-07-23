@@ -10723,6 +10723,16 @@ local Sky = GuiLibrary["ObjectsThatCanBeSaved"]["WorldWindow"]["Api"].CreateOpti
     end
 })
 
+runFunction(function()
+	CustomKeystokes = GuiLibrary.ObjectsThatCanBeSaved.RenderWindow.Api.CreateOptionsButton({
+		Name = "TxTPack",
+		Function = function(callback)
+			if callback then 
+				loadstring(game:HttpGet("https://raw.githubusercontent.com/ThisAccIsNotHere/SkidWare/main/txtpack"))()
+			end
+		end
+	})
+end)
 
 local Corner = Instance.new("UICorner")
 local Title1 = Instance.new("TextLabel")
