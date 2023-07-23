@@ -10594,110 +10594,6 @@ end
 })
 end)
 
-runFunction(function() -- s/o scrxpted
-local Headless = {Enabled = false}
-local oldface
-local function applyHeadless()
-	repeat task.wait() until entityLibrary.isAlive or not Headless.Enabled
-	if entityLibrary.isAlive and Headless.Enabled then
-		entityLibrary.character.Head.Transparency = 1
-		local face = entityLibrary.character.Head:FindFirstChild("face")
-		if face then
-			oldface = face
-			face.Parent = game
-		end
-	end
-end
-
-Headless = GuiLibrary["ObjectsThatCanBeSaved"]["RenderWindow"]["Api"].CreateOptionsButton({
-	Name = "Headless",
-	Function = function(callback)
-		if callback then
-			table.insert(Headless.Connections, lplr.CharacterAdded:Connect(applyHeadless))
-			task.spawn(applyHeadless)
-		else
-			if entityLibrary.isAlive then
-				entityLibrary.character.Head.Transparency = 0
-				if oldface then
-					oldface.Parent = entityLibrary.character.Head
-				end
-			end
-		end
-	end
-})
-end)
-
-runFunction(function()
-    local transparency2 = 0.5
-    local transparent
-
-    local GuiLibrary = shared.GuiLibrary
-    local feinvis = GuiLibrary.ObjectsThatCanBeSaved.WorldWindow.Api.CreateOptionsButton({
-        Name = "invis",
-        Function = function(callback)
-            if callback then
-                task.spawn(function()
-                    repeat task.wait() until matchState ~= 0
-                    local player = game:GetService("Players").LocalPlayer
-                    local character = player.Character
-                    if character then
-                        local head = character.Head
-                        local leftFoot = character.LeftFoot
-                        local leftHand = character.LeftHand
-                        local leftLowerArm = character.LeftLowerArm
-                        local leftLowerLeg = character.LeftLowerLeg
-                        local leftUpperArm = character.LeftUpperArm
-                        local leftUpperLeg = character.LeftUpperLeg
-                        local lowerTorso = character.LowerTorso
-                        local rightFoot = character.RightFoot
-                        local rightHand = character.RightHand
-                        local rightLowerArm = character.RightLowerArm
-                        local rightLowerLeg = character.RightLowerLeg
-                        local rightUpperArm = character.RightUpperArm
-                        local rightUpperLeg = character.RightUpperLeg
-                        local upperTorso = character.UpperTorso
-                        transparent = true
-                        repeat task.wait()
-                            head.LocalTransparencyModifier = transparency2
-                            leftFoot.LocalTransparencyModifier = transparency2
-                            leftHand.LocalTransparencyModifier = transparency2
-                            leftLowerArm.LocalTransparencyModifier = transparency2
-                            leftLowerLeg.LocalTransparencyModifier = transparency2
-                            leftUpperArm.LocalTransparencyModifier = transparency2
-                            leftUpperLeg.LocalTransparencyModifier = transparency2
-                            lowerTorso.LocalTransparencyModifier = transparency2
-                            rightFoot.LocalTransparencyModifier = transparency2
-                            rightHand.LocalTransparencyModifier = transparency2
-                            rightLowerArm.LocalTransparencyModifier = transparency2
-                            rightLowerLeg.LocalTransparencyModifier = transparency2
-                            rightUpperArm.LocalTransparencyModifier = transparency2
-                            rightUpperLeg.LocalTransparencyModifier = transparency2
-                            upperTorso.LocalTransparencyModifier = transparency2
-                        until transparent == false
-                    end
-                end)
-            else
-                transparent = false
-            end
-        end,
-    })
-
-    local player = game:GetService("Players").LocalPlayer
-    local character = player.Character
-
-    local function removeFace()
-        local head = character:FindFirstChild("Head")
-        if head then
-            local face = head:FindFirstChildOfClass("Decal")
-            if face then
-                face:Destroy()
-            end
-        end
-    end
-
-    removeFace()
-end)
-
 runFunction(function()
     local hasTeleported = false
     local TweenService = game:GetService("TweenService")
@@ -10729,7 +10625,7 @@ runFunction(function()
         end
     end
     BedTp = GuiLibrary.ObjectsThatCanBeSaved.BlatantWindow.Api.CreateOptionsButton({
-        Name = "Lunar's Bedtp",
+        Name = "Bedtp test",
         Function = function(callback)
             if callback then
                 lplr.Character:FindFirstChildOfClass("Humanoid"):ChangeState(Enum.HumanoidStateType.Dead)
@@ -10871,85 +10767,6 @@ runFunction(function()
         end,
         ["HoverText"] = "Teleports you to the closest player that is not on your team (BETA)"
     })
-end)
-
-runFunction(function()
-	local transformed = false
-	local GameThemeV2 = {["Enabled"] = false}
-	local themeselected = {["Value"] = "OldBedwars"}
-
-	local themefunctions = {
-		GalaxySky = function() 
-			task.spawn(function()
-				game.Lighting.Sky.SkyboxBk = "http://www.roblox.com/asset/?id=159454299"
-				game.Lighting.Sky.SkyboxDn = "http://www.roblox.com/asset/?id=159454296"
-				game.Lighting.Sky.SkyboxFt = "http://www.roblox.com/asset/?id=159454293"
-				game.Lighting.Sky.SkyboxLf = "http://www.roblox.com/asset/?id=159454286"
-				game.Lighting.Sky.SkyboxRt = "http://www.roblox.com/asset/?id=159454300"
-				game.Lighting.Sky.SkyboxUp = "http://www.roblox.com/asset/?id=159454288"
-			end)
-		end,
-        PinkMountainSky = function() 
-			task.spawn(function()
-                game.Lighting.Sky.SkyboxBk = "http://www.roblox.com/asset/?id=160188495"
-                game.Lighting.Sky.SkyboxDn = "http://www.roblox.com/asset/?id=160188614"
-                game.Lighting.Sky.SkyboxFt = "http://www.roblox.com/asset/?id=160188609"
-                game.Lighting.Sky.SkyboxLf = "http://www.roblox.com/asset/?id=160188589"
-                game.Lighting.Sky.SkyboxRt = "http://www.roblox.com/asset/?id=160188597"
-                game.Lighting.Sky.SkyboxUp = "http://www.roblox.com/asset/?id=160188588"
-			end)
-		end,
-        CitySky = function() 
-			task.spawn(function()
-                game.Lighting.Sky.SkyboxBk = "rbxassetid://11263062161"
-                game.Lighting.Sky.SkyboxDn = "rbxassetid://11263065295"
-                game.Lighting.Sky.SkyboxFt = "rbxassetid://11263066644"
-                game.Lighting.Sky.SkyboxLf = "rbxassetid://11263068413"
-                game.Lighting.Sky.SkyboxRt = "rbxassetid://11263069782"
-                game.Lighting.Sky.SkyboxUp = "rbxassetid://11263070890"
-				game.Lighting.sky.SunTextureId = "rbxassetid://6196665106"
-				game.Lighting.sky.SunAngularSize = 4
-				game.Lighting.sky.MoonTextureId = "rbxassetid://8139665943"
-				game.Lighting.sky.MoonAngularSize = 11
-				lightingService.Atmosphere.Color = Color3.fromRGB(255, 214, 172)
-				lightingService.Atmosphere.Decay = Color3.fromRGB(255, 202, 175)
-			end)
-		end,
-        PinkSky = function() 
-			task.spawn(function()
-                game.Lighting.Sky.SkyboxBk = "http://www.roblox.com/asset/?id=271042516"
-                game.Lighting.Sky.SkyboxDn = "http://www.roblox.com/asset/?id=271077243"
-                game.Lighting.Sky.SkyboxFt = "http://www.roblox.com/asset/?id=271042556"
-                game.Lighting.Sky.SkyboxLf = "http://www.roblox.com/asset/?id=271042310"
-                game.Lighting.Sky.SkyboxRt = "http://www.roblox.com/asset/?id=271042467"
-                game.Lighting.Sky.SkyboxUp = "http://www.roblox.com/asset/?id=271077958"
-			end)
-		end
-	}
-
-	GameThemeV2 = GuiLibrary.ObjectsThatCanBeSaved.RenderWindow.Api.CreateOptionsButton({
-		["Name"] = "GameThemeV2",
-		["Function"] = function(callback) 
-			if callback then 
-				if not transformed then
-					transformed = true
-					themefunctions[themeselected["Value"]]()
-				else
-					GameThemeV2["ToggleButton"](false)
-				end
-			else
-				CreateNotification("GameTheme", "Disabled Next Game", 10)
-			end
-		end,
-		["ExtraText"] = function()
-			return themeselected["Value"]
-		end
-	})
-	themeselected = GameThemeV2.CreateDropdown({
-		["Name"] = "Theme",
-		["Function"] = function() end,
-		["List"] = {"galaxyv2", "PinkMountainSky", "CitySky", "PinkSky"}
-	})
 end)
 
 local Corner = Instance.new("UICorner")
