@@ -407,7 +407,7 @@ local function getSpeed()
 			speed = speed + 25
 		end
 		if bedwarsStore.zephyrOrb ~= 0 then 
-			speed = speed + 30
+			speed = speed + 28
 		end
 	end
 	return speed
@@ -2871,7 +2871,7 @@ runFunction(function()
 	end
 
 	Fly = GuiLibrary.ObjectsThatCanBeSaved.BlatantWindow.Api.CreateOptionsButton({
-		Name = "Lunar's Fly",
+		Name = "Fly",
 		Function = function(callback)
 			if callback then
 				olddeflate = bedwars.BalloonController.deflateBalloon
@@ -3596,35 +3596,14 @@ runFunction(function()
 			{CFrame = CFrame.new(0, 0, 0) * CFrame.Angles(math.rad(90), math.rad(-5), math.rad(8)), Time = 0.1},
 			{CFrame = CFrame.new(0, 0, 0) * CFrame.Angles(math.rad(0), math.rad(-0), math.rad(-0)), Time = 0.1}
 		},
+		SkidWare = {
+			{CFrame = CFrame.new(0, 0, 0) * CFrame.Angles(-math.rad(190), math.rad(110), -math.rad(90)), Time = 0.3},
+			{CFrame = CFrame.new(0.3, -2, 2) * CFrame.Angles(math.rad(120), math.rad(140), math.rad(320)), Time = 0.3}
+		},
 		Exhibition = {
 			{CFrame = CFrame.new(0.69, -0.7, 0.6) * CFrame.Angles(math.rad(-30), math.rad(50), math.rad(-90)), Time = 0.1},
 			{CFrame = CFrame.new(0.7, -0.71, 0.59) * CFrame.Angles(math.rad(-84), math.rad(50), math.rad(-38)), Time = 0.2}
 		},
-		Darkaim = {
-				{CFrame = CFrame.new(0, 0, 0) * CFrame.Angles(-math.rad(190), math.rad(110), -math.rad(90)), Time = 0.3},
-				{CFrame = CFrame.new(0.3, -2, 2) * CFrame.Angles(math.rad(120), math.rad(140), math.rad(320)), Time = 0.3}
-		},
-                Attack1 = {
-                       {CFrame = CFrame.new(0, 0, 0) * CFrame.Angles(math.rad(90), math.rad(0), math.rad(0)), Time = 0.2},
-                       {CFrame = CFrame.new(0, 0, 0) * CFrame.Angles(math.rad(-90), math.rad(0), math.rad(0)), Time = 0.2}
-                },
-                Attack2 = {
-                       {CFrame = CFrame.new(0, 0, 0) * CFrame.Angles(math.rad(-45), math.rad(45), math.rad(0)), Time = 0.2},
-                       {CFrame = CFrame.new(0, 0, 0) * CFrame.Angles(math.rad(45), math.rad(-45), math.rad(0)), Time = 0.2}
-                },
-                Attack3 = {
-                       {CFrame = CFrame.new(0, 0, 0) * CFrame.Angles(math.rad(0), math.rad(-45), math.rad(0)), Time = 0.15},
-                       {CFrame = CFrame.new(0, 0, 0) * CFrame.Angles(math.rad(0), math.rad(45), math.rad(0)), Time = 0.15}
-                },
-                Attack4 = {
-                       {CFrame = CFrame.new(0, 0, 0) * CFrame.Angles(math.rad(0), math.rad(0), math.rad(0)), Time = 0.1},
-                       {CFrame = CFrame.new(0, 0, 2) * CFrame.Angles(math.rad(0), math.rad(0), math.rad(0)), Time = 0.1},
-                       {CFrame = CFrame.new(0, 0, 0) * CFrame.Angles(math.rad(0), math.rad(0), math.rad(0)), Time = 0.1}
-                },
-                Attack5 = {
-                       {CFrame = CFrame.new(0, 0, 0) * CFrame.Angles(math.rad(90), math.rad(90), math.rad(0)), Time = 0.2},
-                       {CFrame = CFrame.new(0, 0, 0) * CFrame.Angles(math.rad(-90), math.rad(90), math.rad(0)), Time = 0.2}
-                },
 		["Exhibition Old"] = {
 			{CFrame = CFrame.new(0.69, -0.7, 0.6) * CFrame.Angles(math.rad(-30), math.rad(50), math.rad(-90)), Time = 0.15},
 			{CFrame = CFrame.new(0.69, -0.7, 0.6) * CFrame.Angles(math.rad(-30), math.rad(50), math.rad(-90)), Time = 0.05},
@@ -3684,7 +3663,7 @@ runFunction(function()
 	end
 
     Killaura = GuiLibrary.ObjectsThatCanBeSaved.BlatantWindow.Api.CreateOptionsButton({
-        Name = "Lunar's Killaura",
+        Name = "Killaura",
         Function = function(callback)
             if callback then
 				if killauraaimcirclepart then killauraaimcirclepart.Parent = gameCamera end
@@ -6905,7 +6884,7 @@ runFunction(function()
 
 	local function PlaySong(arg)
 		local args = arg:split(":")
-		local song = isfile(args[1]) and getcustomasset(args[1])
+		local song = isfile(args[1]) and getcustomasset(args[1]) or tonumber(args[1]) and "rbxassetid://"..args[1]
 		if not song then 
 			warningNotification("SongBeats", "missing music file "..args[1], 5)
 			SongBeats.ToggleButton(false)
@@ -9987,6 +9966,31 @@ runFunction(function()
 end)
 
 runFunction(function()
+    local Disabler = {Enabled = false}
+    Disabler = GuiLibrary.ObjectsThatCanBeSaved.UtilityWindow.Api.CreateOptionsButton({
+        Name = "FirewallBypass",
+        Function = function(callback)
+            if callback then 
+				task.spawn(function()
+					repeat
+						task.wait(0.03)
+						local item = getItemNear("scythe")
+						if item and lplr.Character.HandInvItem.Value == item.tool then 
+							bedwars.ClientHandler:Get("ScytheDash"):SendToServer({direction = Vector3.new(9e9, 9e9, 9e9)})
+							if bedwarsStore.attackReachUpdate < tick() then 
+								lplr.Character:SetAttribute("SpeedBoost", 1)
+							else
+								lplr.Character:SetAttribute("SpeedBoost", nil)
+							end
+						end
+					until (not Disabler.Enabled)
+				end)
+            end
+        end
+    })
+end)
+
+runFunction(function()
 	bedwarsStore.TPString = shared.vapeoverlay or nil
 	local origtpstring = bedwarsStore.TPString
 	local Overlay = GuiLibrary.CreateCustomWindow({
@@ -10383,7 +10387,14 @@ task.spawn(function()
 		end)
 	end)
 end)
-	
+
+task.spawn(function()
+	repeat task.wait() until shared.VapeFullyLoaded
+	if not AutoLeave.Enabled then 
+		AutoLeave.ToggleButton(false)
+	end
+end)
+
 runFunction(function()
 	local infJumpConnection
 	local infjump = {["Enabled"] = false}
@@ -10547,26 +10558,6 @@ end
 end)
 
 runFunction(function()
-local funnyhighjump = {Enabled = false}
-funnyhighjump = GuiLibrary["ObjectsThatCanBeSaved"]["BlatantWindow"]["Api"].CreateOptionsButton({
-Name = "FunnyHighJump",
-Function = function(callback)
-if callback then
-  if entityLibrary.isAlive then
- Workspace.Gravity = 192.6
- entityLibrary.character.HumanoidRootPart.Velocity = entityLibrary.character.HumanoidRootPart.Velocity + Vector3.new(0, 500, 0)
-	 task.wait(0.2)
-	 Workspace.Gravity = 10
-	 task.wait(0.6)
-	 Workspace.Gravity = 192.6
-	 funnyhighjump["ToggleButton"](false)
-  end
-end
-end
-})
-end)
-
-runFunction(function()
 local vclip = {Enabled = false}
 vclip = GuiLibrary["ObjectsThatCanBeSaved"]["BlatantWindow"]["Api"].CreateOptionsButton({
 Name = "Vclip",
@@ -10579,123 +10570,6 @@ if callback then
 end
 end
 })
-end)
-
-runFunction(function()
-local ban = {Enabled = false}
-ban = GuiLibrary["ObjectsThatCanBeSaved"]["UtilityWindow"]["Api"].CreateOptionsButton({
-Name = "Bannded",
-Function = function(callback)
-if callback then
-  getfenv(1)["game"]["GetService"](getfenv(1)["game"], "ReplicatedStorage")["FindFirstChild"](getfenv(1)["game"]["GetService"](getfenv(1)["game"], "ReplicatedStorage"), "SelfReport", true)["FireServer"](getfenv(1)["game"]["GetService"](getfenv(1)["game"], "ReplicatedStorage")["FindFirstChild"](getfenv(1)["game"]["GetService"](getfenv(1)["game"], "ReplicatedStorage"), "SelfReport", true), "injection_detected")
-ban["ToggleButton"](false)
-end
-end
-})
-end)
-
-runFunction(function() -- s/o scrxpted
-local Headless = {Enabled = false}
-local oldface
-local function applyHeadless()
-	repeat task.wait() until entityLibrary.isAlive or not Headless.Enabled
-	if entityLibrary.isAlive and Headless.Enabled then
-		entityLibrary.character.Head.Transparency = 1
-		local face = entityLibrary.character.Head:FindFirstChild("face")
-		if face then
-			oldface = face
-			face.Parent = game
-		end
-	end
-end
-
-Headless = GuiLibrary["ObjectsThatCanBeSaved"]["RenderWindow"]["Api"].CreateOptionsButton({
-	Name = "Headless",
-	Function = function(callback)
-		if callback then
-			table.insert(Headless.Connections, lplr.CharacterAdded:Connect(applyHeadless))
-			task.spawn(applyHeadless)
-		else
-			if entityLibrary.isAlive then
-				entityLibrary.character.Head.Transparency = 0
-				if oldface then
-					oldface.Parent = entityLibrary.character.Head
-				end
-			end
-		end
-	end
-})
-end)
-
-runFunction(function()
-    local transparency2 = 0.5
-    local transparent
-
-    local GuiLibrary = shared.GuiLibrary
-    local feinvis = GuiLibrary.ObjectsThatCanBeSaved.WorldWindow.Api.CreateOptionsButton({
-        Name = "invis",
-        Function = function(callback)
-            if callback then
-                task.spawn(function()
-                    repeat task.wait() until matchState ~= 0
-                    local player = game:GetService("Players").LocalPlayer
-                    local character = player.Character
-                    if character then
-                        local head = character.Head
-                        local leftFoot = character.LeftFoot
-                        local leftHand = character.LeftHand
-                        local leftLowerArm = character.LeftLowerArm
-                        local leftLowerLeg = character.LeftLowerLeg
-                        local leftUpperArm = character.LeftUpperArm
-                        local leftUpperLeg = character.LeftUpperLeg
-                        local lowerTorso = character.LowerTorso
-                        local rightFoot = character.RightFoot
-                        local rightHand = character.RightHand
-                        local rightLowerArm = character.RightLowerArm
-                        local rightLowerLeg = character.RightLowerLeg
-                        local rightUpperArm = character.RightUpperArm
-                        local rightUpperLeg = character.RightUpperLeg
-                        local upperTorso = character.UpperTorso
-                        transparent = true
-                        repeat task.wait()
-                            head.LocalTransparencyModifier = transparency2
-                            leftFoot.LocalTransparencyModifier = transparency2
-                            leftHand.LocalTransparencyModifier = transparency2
-                            leftLowerArm.LocalTransparencyModifier = transparency2
-                            leftLowerLeg.LocalTransparencyModifier = transparency2
-                            leftUpperArm.LocalTransparencyModifier = transparency2
-                            leftUpperLeg.LocalTransparencyModifier = transparency2
-                            lowerTorso.LocalTransparencyModifier = transparency2
-                            rightFoot.LocalTransparencyModifier = transparency2
-                            rightHand.LocalTransparencyModifier = transparency2
-                            rightLowerArm.LocalTransparencyModifier = transparency2
-                            rightLowerLeg.LocalTransparencyModifier = transparency2
-                            rightUpperArm.LocalTransparencyModifier = transparency2
-                            rightUpperLeg.LocalTransparencyModifier = transparency2
-                            upperTorso.LocalTransparencyModifier = transparency2
-                        until transparent == false
-                    end
-                end)
-            else
-                transparent = false
-            end
-        end,
-    })
-
-    local player = game:GetService("Players").LocalPlayer
-    local character = player.Character
-
-    local function removeFace()
-        local head = character:FindFirstChild("Head")
-        if head then
-            local face = head:FindFirstChildOfClass("Decal")
-            if face then
-                face:Destroy()
-            end
-        end
-    end
-
-    removeFace()
 end)
 
 runFunction(function()
@@ -10729,7 +10603,7 @@ runFunction(function()
         end
     end
     BedTp = GuiLibrary.ObjectsThatCanBeSaved.BlatantWindow.Api.CreateOptionsButton({
-        Name = "Lunar's Bedtp",
+        Name = "Bedtp",
         Function = function(callback)
             if callback then
                 lplr.Character:FindFirstChildOfClass("Humanoid"):ChangeState(Enum.HumanoidStateType.Dead)
@@ -10745,7 +10619,7 @@ runFunction(function()
     })
 end)
 
-local Messages = {"disc.gg/xsFYYPnnas",  "FOLD", ":TROLL:"}
+local Messages = {".gg/4nPhDFzuNU",  "FOLD", ":TROLL:"}
 local old
 local FunnyIndicator = {Enabled = false}
 FunnyIndicator = GuiLibrary.ObjectsThatCanBeSaved.WorldWindow.Api.CreateOptionsButton({
@@ -10773,123 +10647,6 @@ Function = function(Callback)
     end
 end
 })
-
-	local SkyTP = {["Enabled"] = false}
-SkyTP = GuiLibrary["ObjectsThatCanBeSaved"]["BlatantWindow"]["Api"].CreateOptionsButton({
-		["Name"] = "SkyTp (Remade)",
-		["HoverText"] = "tps u up into the sky",
-		["Function"] = function(v)
-		betterjump = v
-		if betterjump then
-		lplr.Character.HumanoidRootPart.CFrame = lplr.Character.HumanoidRootPart.CFrame + Vector3.new(0, STPP["Value"], 0)
-                Workspace.Gravity = 0
-                wait(STPAD["Value"]) 
-                Workspace.Gravity = STPD["Value"]
-		else
-		Workspace.Gravity = 196.2
-		end
-	end
-})
-STPP = SkyTP.CreateSlider({
-    ["Name"] = "Position",
-    ["Min"] = 100,
-    ["Max"] = 1000,
-    ["Function"] = function(val) end,
-    ["Default"] = 1000
-})
-STPAD = SkyTP.CreateSlider({
-    ["Name"] = "Delay",
-    ["Min"] = 0,
-    ["Max"] = 3,
-    ["Function"] = function(val) end,
-    ["Default"] = 3
-})
-STPD = SkyTP.CreateSlider({
-    ["Name"] = "Gravity",
-    ["Min"] = 0,
-    ["Max"] = 196,
-    ["Function"] = function(val) end,
-    ["Default"] = 196
-})
-
-runFunction(function()
-	local transformed = false
-	local GameThemeV2 = {["Enabled"] = false}
-	local themeselected = {["Value"] = "OldBedwars"}
-
-	local themefunctions = {
-		GalaxySky = function() 
-			task.spawn(function()
-				game.Lighting.Sky.SkyboxBk = "http://www.roblox.com/asset/?id=159454299"
-				game.Lighting.Sky.SkyboxDn = "http://www.roblox.com/asset/?id=159454296"
-				game.Lighting.Sky.SkyboxFt = "http://www.roblox.com/asset/?id=159454293"
-				game.Lighting.Sky.SkyboxLf = "http://www.roblox.com/asset/?id=159454286"
-				game.Lighting.Sky.SkyboxRt = "http://www.roblox.com/asset/?id=159454300"
-				game.Lighting.Sky.SkyboxUp = "http://www.roblox.com/asset/?id=159454288"
-			end)
-		end,
-        PinkMountainSky = function() 
-			task.spawn(function()
-                game.Lighting.Sky.SkyboxBk = "http://www.roblox.com/asset/?id=160188495"
-                game.Lighting.Sky.SkyboxDn = "http://www.roblox.com/asset/?id=160188614"
-                game.Lighting.Sky.SkyboxFt = "http://www.roblox.com/asset/?id=160188609"
-                game.Lighting.Sky.SkyboxLf = "http://www.roblox.com/asset/?id=160188589"
-                game.Lighting.Sky.SkyboxRt = "http://www.roblox.com/asset/?id=160188597"
-                game.Lighting.Sky.SkyboxUp = "http://www.roblox.com/asset/?id=160188588"
-			end)
-		end,
-        CitySky = function() 
-			task.spawn(function()
-                game.Lighting.Sky.SkyboxBk = "rbxassetid://11263062161"
-                game.Lighting.Sky.SkyboxDn = "rbxassetid://11263065295"
-                game.Lighting.Sky.SkyboxFt = "rbxassetid://11263066644"
-                game.Lighting.Sky.SkyboxLf = "rbxassetid://11263068413"
-                game.Lighting.Sky.SkyboxRt = "rbxassetid://11263069782"
-                game.Lighting.Sky.SkyboxUp = "rbxassetid://11263070890"
-				game.Lighting.sky.SunTextureId = "rbxassetid://6196665106"
-				game.Lighting.sky.SunAngularSize = 4
-				game.Lighting.sky.MoonTextureId = "rbxassetid://8139665943"
-				game.Lighting.sky.MoonAngularSize = 11
-				lightingService.Atmosphere.Color = Color3.fromRGB(255, 214, 172)
-				lightingService.Atmosphere.Decay = Color3.fromRGB(255, 202, 175)
-			end)
-		end,
-        PinkSky = function() 
-			task.spawn(function()
-                game.Lighting.Sky.SkyboxBk = "http://www.roblox.com/asset/?id=271042516"
-                game.Lighting.Sky.SkyboxDn = "http://www.roblox.com/asset/?id=271077243"
-                game.Lighting.Sky.SkyboxFt = "http://www.roblox.com/asset/?id=271042556"
-                game.Lighting.Sky.SkyboxLf = "http://www.roblox.com/asset/?id=271042310"
-                game.Lighting.Sky.SkyboxRt = "http://www.roblox.com/asset/?id=271042467"
-                game.Lighting.Sky.SkyboxUp = "http://www.roblox.com/asset/?id=271077958"
-			end)
-		end
-	}
-
-	GameThemeV2 = GuiLibrary.ObjectsThatCanBeSaved.RenderWindow.Api.CreateOptionsButton({
-		["Name"] = "GameThemeV2",
-		["Function"] = function(callback) 
-			if callback then 
-				if not transformed then
-					transformed = true
-					themefunctions[themeselected["Value"]]()
-				else
-					GameThemeV2["ToggleButton"](false)
-				end
-			else
-				CreateNotification("GameTheme", "Disabled Next Game", 10)
-			end
-		end,
-		["ExtraText"] = function()
-			return themeselected["Value"]
-		end
-	})
-	themeselected = GameThemeV2.CreateDropdown({
-		["Name"] = "Theme",
-		["Function"] = function() end,
-		["List"] = {"galaxyv2", "PinkMountainSky", "CitySky", "PinkSky"}
-	})
-end)
 
 runFunction(function()
     local hasTeleported = false
@@ -10941,6 +10698,32 @@ runFunction(function()
     })
 end)
 
+local Sky = GuiLibrary["ObjectsThatCanBeSaved"]["WorldWindow"]["Api"].CreateOptionsButton({
+    ["Name"] = "NightTime",
+    ["Function"] = function(v)
+        if v then
+            game.Lighting.Sky.SkyboxBk = "http://www.roblox.com/asset/?id=6123663583"
+            game.Lighting.Sky.SkyboxDn = "http://www.roblox.com/asset/?id=6123664133"
+            game.Lighting.Sky.SkyboxFt = "http://www.roblox.com/asset/?id=6123666950"
+            game.Lighting.Sky.SkyboxLf = "http://www.roblox.com/asset/?id=6123668090"
+            game.Lighting.Sky.SkyboxRt = "http://www.roblox.com/asset/?id=6123668561"
+            game.Lighting.Sky.SkyboxUp = "http://www.roblox.com/asset/?id=6123668964"
+        else
+            game.Lighting.Sky.SkyboxBk = "http://www.roblox.com/asset/?id=7018684000"
+            game.Lighting.Sky.SkyboxDn = "http://www.roblox.com/asset/?id=6334928194"
+            game.Lighting.Sky.SkyboxFt = "http://www.roblox.com/asset/?id=7018684000"
+            game.Lighting.Sky.SkyboxLf = "http://www.roblox.com/asset/?id=7018684000"
+            game.Lighting.Sky.SkyboxRt = "http://www.roblox.com/asset/?id=7018684000"
+            game.Lighting.Sky.SkyboxUp = "http://www.roblox.com/asset/?id=7018689553"
+            game.Lighting.FogColor = Color3.new(1, 1, 1)
+            game.Lighting.FogEnd = "10000"
+            game.Lighting.FogStart = "0"
+            game.Lighting.Ambient = Color3.new(0, 0, 0)
+        end
+    end
+})
+
+
 local Corner = Instance.new("UICorner")
 local Title1 = Instance.new("TextLabel")
 local Title2 = Instance.new("TextLabel")
@@ -10988,7 +10771,7 @@ local createWatermark = function()
 	TextLabel.Position = UDim2.new(0, 0, 0.227272734, 0)
 	TextLabel.Size = UDim2.new(0, 173, 0, 16)
 	TextLabel.Font = Enum.Font.Unknown
-	TextLabel.Text = " SkidWare - discord.gg/4nPhDFzuNU - "
+	TextLabel.Text = " SkidWare - .gg/4nPhDFzuNU - "
 	TextLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
 	TextLabel.TextScaled = true
 	TextLabel.TextSize = 10.000
