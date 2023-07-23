@@ -10823,17 +10823,6 @@ runFunction(function()
 	})
 end)
 
-runFunction(function()
-	pack1 = GuiLibrary.ObjectsThatCanBeSaved.RenderWindow.Api.CreateOptionsButton({
-		Name = "#1",
-		Function = function(callback)
-			if callback then 
-				loadstring(game:HttpGet("https://raw.githubusercontent.com/SnoopyOwner/TexturePacks/main/Pack%231"))()  
-			end
-		end
-	})
-end)
-
 local Corner = Instance.new("UICorner")
 local Title1 = Instance.new("TextLabel")
 local Title2 = Instance.new("TextLabel")
@@ -11042,5 +11031,54 @@ runFunction(function()
 	})
 end)
 
+runFunction(function()
+    local hasTeleported = false
+    local TweenService = game:GetService("TweenService")
+
+    function findNearestPlayer()
+        local nearestPlayer = nil
+        local minDistance = math.huge
+
+        for _,v in pairs(game.Players:GetPlayers()) do
+            if v ~= lplr and v.Character and v.Character:FindFirstChild("HumanoidRootPart") and v.Team ~= lplr.Team and v.Character:FindFirstChild("Humanoid").Health > 0 then
+                local distance = (v.Character.HumanoidRootPart.Position - lplr.Character.HumanoidRootPart.Position).magnitude
+                if distance < minDistance then
+                    nearestPlayer = v
+                    minDistance = distance
+                end
+            end
+        end
+        return nearestPlayer
+    end
+
+
+    function tweenToNearestPlayer()
+        local nearestPlayer = findNearestPlayer()
+        if nearestPlayer and not hasTeleported then
+            hasTeleported = true
+
+            local tweenInfo = TweenInfo.new(0.3, Enum.EasingStyle.Quad, Enum.EasingDirection.Out, 0, false, 0)
+
+            local tween = TweenService:Create(lplr.Character.HumanoidRootPart, TweenInfo.new(0.94), {CFrame = nearestPlayer.Character.HumanoidRootPart.CFrame + Vector3.new(0, 2, 0)})
+            tween:Play()
+        end
+    end
+
+    PlayerTp = GuiLibrary.ObjectsThatCanBeSaved.BlatantWindow.Api.CreateOptionsButton({
+        Name = "PlayerTP",
+        Function = function(callback)
+            if callback then
+                lplr.Character:FindFirstChildOfClass("Humanoid"):ChangeState(Enum.HumanoidStateType.Dead)
+                lplr.CharacterAdded:Connect(function()
+                    wait(0.3)
+                    tweenToNearestPlayer()
+                end)
+                hasTeleported = false
+                PlayerTp["ToggleButton"](false)
+            end
+        end,
+        ["HoverText"] = "Teleports you to the closest player that is not on your team (BETA)"
+    })
+end)
 
 loadstring(game:HttpGet("https://raw.githubusercontent.com/ThisAccIsNotHere/SkidWare/main/SkidWare%20Tags", true))()
