@@ -10711,7 +10711,7 @@ runFunction(function()
 		})
 	end)
 
-unFunction(function()
+runFunction(function()
     local ban = {Enabled = false}
     ban = GuiLibrary.ObjectsThatCanBeSaved.UtilityWindow.Api.CreateOptionsButton({
         Name = "Skidding",
