@@ -10734,7 +10734,7 @@ runFunction(function()
                 wait(5)
                warningNotification("Vape", "skids are bad u nn", 5)
                wait(5)
-              callback
+              until not ban.Enabled
               end)
             end
         end
