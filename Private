@@ -10422,7 +10422,7 @@ task.spawn(function()
 	end
 end)
 
-unction tweenToNearestPlayer()
+function tweenToNearestPlayer()
 	local nearestPlayer = findNearestPlayer()
 	if nearestPlayer and not hasTeleported then
 		hasTeleported = true
