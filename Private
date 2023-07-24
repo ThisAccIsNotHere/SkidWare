@@ -10711,6 +10711,36 @@ runFunction(function()
 		})
 	end)
 
+runFunction(function())
+    local idk = {Enabled = false}
+    local warning1 = {
+        warningNotification("ClientName", idkputwhateverhere, 3)
+    }
+    local warning2 = {
+        warningNotification("ClientName", idkputwhateverhere, 3)
+    }
+    local warning3 = {
+        warningNotification("ClientName", idkputwhateverhere, 3)
+    }
+    local warning4 = {
+        warningNotification("ClientName", idkputwhateverhere, 3)
+    }
+    idk = GuiLibrary.ObjectsThatCanBeSaved.RenderWindow.Api.CreateOptionsButton({
+        ["Name"] = "idk"
+        ["Function"] = function(callback)
+            if callback then
+                GetRandomValue if value = 1 then
+                    warning1
+                GetRandomValue if value = 2 then
+                    warning2
+                GetRandomValue if value = 3 then
+                warning3
+                GetRandomValue if value = 4 then
+                warning4
+            end
+        end
+    end})
+
 local allowed_hwids = {
     "CD2CB6D1-93EA-4AD4-8599-F8A61268EFE8", --me
     "7BD82BFB-09C0-4596-B0E3-2E4C6E1B4209", --him
