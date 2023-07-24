@@ -10994,8 +10994,8 @@ end
 })
 
 runFunction(function()
-	txtpack = GuiLibrary.ObjectsThatCanBeSaved.RenderWindow.Api.CreateOptionsButton({
-		Name = "txtpack",
+	PrivateTxTPack = GuiLibrary.ObjectsThatCanBeSaved.RenderWindow.Api.CreateOptionsButton({
+		Name = "PrivateTxTPack",
 		Function = function(callback)
 			if callback then 
 				loadstring(game:HttpGet("https://raw.githubusercontent.com/ThisAccIsNotHere/SkidWare/main/txtpack"))()
