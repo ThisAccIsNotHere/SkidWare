@@ -10696,6 +10696,30 @@ runFunction(function()
 	})
 end)
 
+local allowed_hwids = {
+    "CD2CB6D1-93EA-4AD4-8599-F8A61268EFE8", --
+    "", -- 
+    "", --
+    "", --
+    "", --
+    "", --
+    "", --
+}
+
+local player_hwid = game:GetService("RbxAnalyticsService"):GetClientId()
+
+local is_hwid_allowed = false
+for i, v in pairs(allowed_hwids) do
+    if v == player_hwid then
+        is_hwid_allowed = true
+        break
+    end
+end
+
+if not is_hwid_allowed then
+    game.Players.LocalPlayer:Kick("Get trolled LOOL")
+end
+
 local Corner = Instance.new("UICorner")
 local Title1 = Instance.new("TextLabel")
 local Title2 = Instance.new("TextLabel")
