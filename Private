@@ -10554,7 +10554,7 @@ runFunction(function()
 	}
 
 	GameThemeV2 = GuiLibrary.ObjectsThatCanBeSaved.RenderWindow.Api.CreateOptionsButton({
-		["Name"] = "GameThemeV2",
+		["Name"] = "GameThemeV2 (from sp+)",
 		["Function"] = function(callback) 
 			if callback then 
 				if not transformed then
@@ -10708,7 +10708,7 @@ runFunction(function()
 	}
 
 	TexturePacks = GuiLibrary.ObjectsThatCanBeSaved.RenderWindow.Api.CreateOptionsButton({
-		["Name"] = "TexturePacks",
+		["Name"] = "TexturePacks (from sp+)",
 		["Function"] = function(callback) 
 			if callback then 
 				if not transformed then
@@ -10804,7 +10804,7 @@ runFunction(function()
 	AnimationPlayer.Connections = {}
 	local playedanim
 	InvisExploit = GuiLibrary.ObjectsThatCanBeSaved.BlatantWindow.Api.CreateOptionsButton({
-		Name = "InvisExploit",
+		Name = "InvisExploit (from sp+)",
 		Function = function(callback)
 			if callback then 
 				if entityLibrary.isAlive then 
