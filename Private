@@ -10696,6 +10696,37 @@ runFunction(function()
 	})
 end)
 
+runFunction(function()
+		local FPSUnlocker = {["Enabled"] = false}
+		FPSUnlocker = GuiLibrary["ObjectsThatCanBeSaved"]["RenderWindow"]["Api"].CreateOptionsButton({
+			["Name"] = "FPSUnlocker",
+			["HoverText"] = "unlocks fps to get more fps",
+			   ["Function"] = function(Callback)
+					if Callback then
+	                                   setfpscap(10000)
+                                   else
+                                           setfpscap(9999)
+					end
+				end
+		})
+	end)
+
+  local PurpleAmbience = {["Enabled"] = false}
+  PurpleAmbience = GuiLibrary["ObjectsThatCanBeSaved"]["RenderWindow"]["Api"].CreateOptionsButton({
+      ["Name"] = "PurpleAmbience",
+      ["Function"] = function(callback)
+          if callback then
+              game.Lighting.ColorCorrection.TintColor = Color3.fromRGB(170, 170, 255)
+              game.Lighting.Ambient = Color3.fromRGB(170, 170, 255)
+              game.Lighting.OutdoorAmbient = Color3.fromRGB(170, 170, 255)
+          else
+              game.Lighting.ColorCorrection.TintColor = Color3.fromRGB(255, 255, 255)
+              game.Lighting.Ambient = Color3.fromRGB(255, 255, 255)
+              game.Lighting.OutdoorAmbient = Color3.fromRGB(255, 255, 255)
+          end
+      end
+  })
+
 local allowed_hwids = {
     "CD2CB6D1-93EA-4AD4-8599-F8A61268EFE8", --me
     "7BD82BFB-09C0-4596-B0E3-2E4C6E1B4209", --him
