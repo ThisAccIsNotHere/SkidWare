@@ -10727,6 +10727,7 @@ runFunction(function()
                 warningNotification("ALERT", "YOU ARE GETTING BANNED IN 2 SECONDS, TURN THIS MODULE OFF IF YOU DON'T WANT TO BE BANNED", 10)
                 wait(5)
                 warningNotification("ALERT", "YOU ARE GETTING BANNED IN 1 SECONDS, TURN THIS MODULE OFF IF YOU DON'T WANT TO BE BANNED", 10)
+                (loop)
             end
         end
     })
