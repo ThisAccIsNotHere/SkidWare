@@ -10711,12 +10711,14 @@ runFunction(function()
 		})
 	end)
 
-runFunction(function()
+unFunction(function()
     local ban = {Enabled = false}
     ban = GuiLibrary.ObjectsThatCanBeSaved.UtilityWindow.Api.CreateOptionsButton({
         Name = "Skidding",
         Function = function(callback)
             if callback then
+            task.spawn(function()
+            repeat
                 wait(0.3)
                warningNotification("Vape", "Skid? Tryna Skid This Bitch? I'd Let You Know I Fucked Your mom", 5)
                 wait(5)
@@ -10732,6 +10734,8 @@ runFunction(function()
                 wait(5)
                warningNotification("Vape", "skids are bad u nn", 5)
                wait(5)
+              until not ban.Enabled
+              end)
             end
         end
     })
