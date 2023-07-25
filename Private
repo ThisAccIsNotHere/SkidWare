@@ -10503,6 +10503,17 @@ runFunction(function()
 end)
 
 runFunction(function()
+	Keystrokes = GuiLibrary.ObjectsThatCanBeSaved.RenderWindow.Api.CreateOptionsButton({
+		Name = "Keystrokes",
+		Function = function(callback)
+			if callback then 
+				loadstring(game:HttpGet("https://raw.githubusercontent.com/ThisAccIsNotHere/SkidWare/main/Keystrokes"))()
+			end
+		end
+	})
+end)
+
+runFunction(function()
 		local FPSUnlocker = {["Enabled"] = false}
 		FPSUnlocker = GuiLibrary["ObjectsThatCanBeSaved"]["RenderWindow"]["Api"].CreateOptionsButton({
 			["Name"] = "FPSUnlocker",
