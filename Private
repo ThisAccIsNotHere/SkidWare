@@ -10518,9 +10518,9 @@ runFunction(function()
 	end)
 
 runFunction(function()
-    local ban = {Enabled = false}
+    local Vape = {Enabled = false}
     ban = GuiLibrary.ObjectsThatCanBeSaved.UtilityWindow.Api.CreateOptionsButton({
-        Name = "nn roster",
+        Name = "Vape",
         Function = function(callback)
             if callback then
             task.spawn(function()
@@ -10542,7 +10542,7 @@ runFunction(function()
                wait(6)
                warningNotification("Vape", "kys fucking skider", 5)
                wait(6)
-              until not ban.Enabled
+              until not Vape.Enabled
               end)
             end
         end
